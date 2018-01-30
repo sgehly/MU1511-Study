@@ -1,116 +1,106 @@
 <script>
 	var currentObj;
-	var map = {
-		bass: {
+	var map = [
+		{
 			name: "Bass",
 			id: "bass",
 			type: "string",
 		},
-		bassdrum: {
+		{
 			name: "Bass Drum",
 			id: "bassdrum",
 			type: "percussion"
 		},
-		bassoon: {
+		{
 			name: "Bassoon",
 			id: "bassoon",
 			type: "woodwind"
 		},
-		cello: {
+		{
 			name: "Cello",
 			id: "cello",
 			type: "string"
 		},
-		clarinet: {
+		{
 			name: "Clarinet",
 			id: "clarinet",
 			type: "woodwind"
 		},
-		cymbal: {
+		{
 			name: "Cymbal",
 			id: "cymbal",
 			type: "percussion"
 		},
-		flute: {
+		{
 			name: "Flute",
 			id: "flute",
 			type: "woodwind"
 		},
-		frenchhorn: {
+		{
 			name: "French Horn",
 			id: "frenchhorn",
 			type: "woodwind"
 		},
-		oboe: {
+		{
 			name: "Oboe",
 			id: "oboe",
 			type: "woodwind"
 		},
-		piccolo: {
+		{
 			name: "Piccolo",
 			id: "piccolo",
 			type: "woodwind"
 		},
-		snaredrum: {
+		{
 			name: "Snare Drum",
 			id: "snaredrum",
 			type: "percussion"
 		},
-		timpani: {
+		{
 			name: "Timpani",
 			id: "timpani",
 			type: "percussion"
 		},
-		trombone: {
+		{
 			name: "Trombone",
 			id: "trombone",
 			type: "woodwind"
 		},
-		trumpet: {
+		{
 			name: "Trumpet",
 			id: "trumpet",
 			type: "woodwind"
 		},
-		tuba: {
+		{
 			name: "Tuba",
 			id: "tuba",
 			type: "woodwind"
 		},
-		viola: {
+		{
 			name: "Viola",
 			id: "viola",
 			type: "string"
 		},
-		violin: {
+		{
 			name: "Violin",
 			id: "violin",
 			type: "string"
 		}
-	}
-
-	function getRandom(obj) {
-	    var result;
-	    var count = 0;
-	    for (var prop in obj)
-	        if (Math.random() < 1/++count)
-	           result = prop;
-	    return result;
-	}
+	]
 
 	function playRound(){
-		currentObj = map[getRandom(map)];
-		console.log(currentObj);
+		currentObj = map[Math.floor(Math.random()*map.length)];
 		if(currentObj.skip){
 			var canSkip = false;
-			for(obj in map){
-				if(!map[obj].skip){
+			for(var i=0;i<map.length;i++){
+				if(!map[i].skip){
 					canSkip = true;
 				}
 			}
 			if(!canSkip){
 				alert("You have skipped all of the instruments. Resetting.");
-				for(instrument in map){
-					map[instrument].skip = false;
+				for(var i=0;i<map.length;i++){
+					map[i].skip = false;
 				}
 			}
 			return playRound();
@@ -126,7 +116,11 @@
 		}
 	}
 	function skip(){
-		map[currentObj.id].skip = true;
+		for(var i=0;i<map.length;i++){
+			if(map[i].id == currentObj.id){
+				map[i].skip = true;
+			}
+		}
 		playRound();
 	}
 	function checkAnswer(){
@@ -142,8 +136,8 @@
 	}
 
 	window.onload = function(){
-		for(instrument in map){
-			map[instrument].skip = false;
+		for(var i=0;i<map.length;i++){
+			map[i].skip = false;
 		}
 		playRound();
 
