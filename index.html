@@ -101,6 +101,18 @@
 		currentObj = map[getRandom(map)];
 		console.log(currentObj);
 		if(currentObj.skip){
+			var canSkip = false;
+			for(obj in map){
+				if(!map[obj].skip){
+					canSkip = true;
+				}
+			}
+			if(!canSkip){
+				alert("You have skipped all of the instruments. Resetting.");
+				for(instrument in map){
+					map[instrument].skip = false;
+				}
+			}
 			return playRound();
 		}
 
