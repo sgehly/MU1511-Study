@@ -4,7 +4,7 @@
 		bass: {
 			name: "Bass",
 			id: "bass",
-			type: "string"
+			type: "string",
 		},
 		bass: {
 			name: "Bass Drum",
@@ -99,7 +99,10 @@
 
 	function playRound(){
 		currentObj = map[getRandom(map)];
-		console.log(currentObj);
+		if(currentObj.skip){
+			return playRound();
+		}
+
 		document.getElementById("content").innerHTML = document.getElementById("template").innerHTML;
 		if(document.getElementById("soundPlay").checked){
 			document.querySelector("#content #audioContainer").setAttribute('src', './mp3/'+currentObj.id+'.mp3');
@@ -109,7 +112,10 @@
 			document.querySelector("#content #imageContainer").setAttribute('src', './img/'+currentObj.id+'.jpg');
 		}
 	}
-
+	function skip(){
+		map[currentObj.id].skip = true;
+		playRound();
+	}
 	function checkAnswer(){
 		var givenInstrument = document.querySelector("#content #instrument").value.toLowerCase().replace(/ /g,"");
 		var givenFamily = document.querySelector("#content #family").value.toLowerCase().replace(/ /g,"");
@@ -124,6 +130,9 @@
 
 	window.onload = function(){
 		playRound();
+		for(instrument in map){
+			map[instrument].skip = false;
+		}
 		document.body.addEventListener('keydown', function(event){
 			if(event.target.tagName == "INPUT" && event.keyCode == 13){
 				checkAnswer();
@@ -157,4 +166,5 @@
 	<br><br>
 	<input id="instrument" type="text"> in the <input id="family" type="text"> family.
 	<button onclick="checkAnswer()">Check</button>
+	<button onclick="skip()">Skip From Now On</button>
 </div>
