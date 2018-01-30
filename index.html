@@ -111,8 +111,8 @@
 	}
 
 	function checkAnswer(){
-		var givenInstrument = document.querySelector("#content #instrument").value.toLowerCase().replace(" \g","");
-		var givenFamily = document.querySelector("#content #family").value.toLowerCase().replace(" \g","");
+		var givenInstrument = document.querySelector("#content #instrument").value.toLowerCase().replace(/ /g,"");
+		var givenFamily = document.querySelector("#content #family").value.toLowerCase().replace(/ /g,"");
 
 		var isCorrect = "incorrect";
 		if(givenInstrument == currentObj.id && givenFamily == currentObj.type){
