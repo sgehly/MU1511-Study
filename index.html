@@ -1,0 +1,160 @@
+<script>
+	var currentObj;
+	var map = {
+		bass: {
+			name: "Bass",
+			id: "bass",
+			type: "string"
+		},
+		bass: {
+			name: "Bass Drum",
+			id: "bassdrum",
+			type: "percussion"
+		},
+		bassoon: {
+			name: "Bassoon",
+			id: "bass",
+			type: "woodwind"
+		},
+		cello: {
+			name: "Cello",
+			id: "cello",
+			type: "string"
+		},
+		clarinet: {
+			name: "Clarinet",
+			id: "clarinet",
+			type: "woodwind"
+		},
+		cymbal: {
+			name: "Cymbal",
+			id: "cymbal",
+			type: "percussion"
+		},
+		flute: {
+			name: "Flute",
+			id: "flute",
+			type: "woodwind"
+		},
+		frenchhorn: {
+			name: "French Horn",
+			id: "frenchhorn",
+			type: "woodwind"
+		},
+		oboe: {
+			name: "Oboe",
+			id: "oboe",
+			type: "woodwind"
+		},
+		piccolo: {
+			name: "Piccolo",
+			id: "piccolo",
+			type: "woodwind"
+		},
+		snaredrum: {
+			name: "Snare Drum",
+			id: "snaredrum",
+			type: "percussion"
+		},
+		timpani: {
+			name: "Timpani",
+			id: "timpani",
+			type: "percussion"
+		},
+		trombone: {
+			name: "Trombone",
+			id: "trombone",
+			type: "woodwind"
+		},
+		trumpet: {
+			name: "Trumpet",
+			id: "trumpet",
+			type: "woodwind"
+		},
+		tuba: {
+			name: "Tuba",
+			id: "tuba",
+			type: "woodwind"
+		},
+		viola: {
+			name: "Viola",
+			id: "viola",
+			type: "string"
+		},
+		violin: {
+			name: "Violin",
+			id: "violin",
+			type: "string"
+		}
+	}
+
+	function getRandom(obj) {
+	    var result;
+	    var count = 0;
+	    for (var prop in obj)
+	        if (Math.random() < 1/++count)
+	           result = prop;
+	    return result;
+	}
+
+	function playRound(){
+		currentObj = map[getRandom(map)];
+		console.log(currentObj);
+		document.getElementById("content").innerHTML = document.getElementById("template").innerHTML;
+		if(document.getElementById("soundPlay").checked){
+			document.querySelector("#content #audioContainer").setAttribute('src', './mp3/'+currentObj.id+'.mp3');
+			document.querySelector("#content #audioPlayer").play();
+		}
+		if(document.getElementById("imageShow").checked){
+			document.querySelector("#content #imageContainer").setAttribute('src', './img/'+currentObj.id+'.jpg');
+		}
+	}
+
+	function checkAnswer(){
+		var givenInstrument = document.querySelector("#content #instrument").value.toLowerCase().replace(" \g","");
+		var givenFamily = document.querySelector("#content #family").value.toLowerCase().replace(" \g","");
+
+		var isCorrect = "incorrect";
+		if(givenInstrument == currentObj.id && givenFamily == currentObj.type){
+			isCorrect = "correct";
+		}
+		alert("Your answer was "+isCorrect+" - The answer is "+currentObj.name+" in the "+currentObj.type+" family.");
+		playRound();
+	}
+
+	window.onload = function(){
+		playRound();
+		document.body.addEventListener('keydown', function(event){
+			if(event.target.tagName == "INPUT" && event.keyCode == 13){
+				checkAnswer();
+			}
+		})
+	}
+</script>
+
+<div>
+	<div>
+		<input id="soundPlay" checked type="checkbox" onchange="playRound()">
+		<span>Play Sound</span>
+	</div>
+	<div>
+		<input id="imageShow" type="checkbox" onchange="playRound()">
+		<span>Show Image</span>
+	</div>
+</div>
+
+<div id="content">
+</div>
+
+<div id="template" style="display:none">
+	<br><br>
+	<img id="imageContainer" height="150px">
+	<br><br>
+	<audio id="audioPlayer" controls>
+	  <source id="audioContainer" type="audio/mpeg">
+	  Your browser does not support the audio tag.
+	</audio>
+	<br><br>
+	<input id="instrument" type="text"> in the <input id="family" type="text"> family.
+	<button onclick="checkAnswer()">Check</button>
+</div>
