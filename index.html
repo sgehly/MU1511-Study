@@ -14,7 +14,7 @@
 		bassoon: {
 			name: "Bassoon",
 			id: "bassoon",
-			type: "string"
+			type: "woodwind"
 		},
 		cello: {
 			name: "Cello",
@@ -99,6 +99,7 @@
 
 	function playRound(){
 		currentObj = map[getRandom(map)];
+		console.log(currentObj);
 		if(currentObj.skip){
 			return playRound();
 		}
@@ -129,10 +130,11 @@
 	}
 
 	window.onload = function(){
-		playRound();
 		for(instrument in map){
 			map[instrument].skip = false;
 		}
+		playRound();
+
 		document.body.addEventListener('keydown', function(event){
 			if(event.target.tagName == "INPUT" && event.keyCode == 13){
 				checkAnswer();
