@@ -118,10 +118,10 @@
 	}
 	function checkAnswer(){
 		var givenInstrument = document.querySelector("#content #instrument").value.toLowerCase().replace(/ /g,"");
-		var givenFamily = document.querySelector("#content #family").value.toLowerCase().replace(/ /g,"");
+		//var givenFamily = document.querySelector("#content #family").value.toLowerCase().replace(/ /g,"");
 
 		var isCorrect = "incorrect";
-		if(givenInstrument == currentObj.id && givenFamily == currentObj.type){
+		if(givenInstrument == currentObj.id/* && givenFamily == currentObj.type*/){
 			isCorrect = "correct";
 		}
 		alert("Your answer was "+isCorrect+" - The answer is "+currentObj.name+" in the "+currentObj.type+" family.");
@@ -164,7 +164,7 @@
 	  Your browser does not support the audio tag.
 	</audio>
 	<br><br>
-	<input id="instrument" type="text"> in the <input id="family" type="text"> family.
+	<input id="instrument" type="text"><!-- in the <input id="family" type="text"> family.-->
 	<button onclick="checkAnswer()">Check</button>
 	<button onclick="skip()">Skip From Now On</button>
 </div>
